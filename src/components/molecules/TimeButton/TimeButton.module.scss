@@ -1,0 +1,10 @@
+.tile {
+  width: 100%;
+  border: 1px solid var(--color-base-100);
+  line-height: 1.2225;
+  text-align: center;
+  font-size: var(--f-size-m);
+  padding: var(--space-s);
+  cursor: pointer;
+  background-color: var(--color-base-00);
+}
