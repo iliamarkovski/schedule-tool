@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--f-size-m);
+  color: var(--color-base-100);
+  line-height: 1.2225;
+
+  strong {
+    font-weight: var(--f-weight-700);
+  }
+}
