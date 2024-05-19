@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+@import './reset.scss';
+@import './variables.scss';
+
+html {
+  font-size: var(--f-size-base);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-size: var(--f-size-m);
+  line-height: calc(4 / 3);
+}
