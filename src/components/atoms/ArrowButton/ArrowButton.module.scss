@@ -1,0 +1,39 @@
+.button {
+  display: inline-block;
+  transition: color var(--ease);
+  cursor: pointer;
+  width: var(--size-icon);
+  aspect-ratio: 1/1;
+  position: relative;
+  color: var(--color-base-100);
+
+  &:disabled {
+    opacity: var(--opacity);
+    cursor: not-allowed;
+  }
+
+  &:not(:disabled):active {
+    color: var(--color-primary);
+  }
+
+  @media (hover: hover) {
+    &:not(:disabled):hover {
+      color: var(--color-primary);
+    }
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    inset: var(--space-xxs);
+    border: solid currentColor;
+    border-width: 0 var(--space-xxs) var(--space-xxs) 0;
+    transform: rotate(-45deg);
+  }
+}
+
+.rotated {
+  &:before {
+    transform: rotate(-225deg);
+  }
+}
