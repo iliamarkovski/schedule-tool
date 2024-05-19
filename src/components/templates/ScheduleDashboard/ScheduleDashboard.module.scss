@@ -1,0 +1,7 @@
+.container {
+  width: min(100% - var(--space-xxl), var(--size-wrapper));
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  padding-block: var(--space-xxl);
+}
