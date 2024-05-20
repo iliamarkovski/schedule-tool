@@ -1,9 +1,17 @@
 .input {
   width: 100%;
-  border: 1px solid var(--color-base-100);
+  border: 1px solid currentColor;
   line-height: 1.1115;
   text-align: center;
   font-size: var(--f-size-m);
   padding: var(--space-s);
   background-color: var(--color-base-00);
+}
+
+.primary {
+  color: var(--color-base-100);
+}
+
+.secondary {
+  color: var(--color-primary);
 }
