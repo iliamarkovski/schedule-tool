@@ -1,0 +1,31 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { Button } from '../Button';
+import { AppDispatch, RootState } from '../../../store';
+import { validateSchedule } from '../../../utils/validateSchedule';
+import { convertScheduleToJSON } from '../../../utils/convertScheduleToJSON';
+import { openModal } from '../../../store/slices/modal';
+import { MODAL_NAMES } from '../../../constants/modalNames';
+
+export const UploadButton = () => {
+  const dispatch: AppDispatch = useDispatch();
+  const times = useSelector((state: RootState) => state.schedule.times);
+  const startDate = useSelector((state: RootState) => state.schedule.startDate);
+
+  const { completed } = validateSchedule(times);
+  const enable = completed;
+
+  const handleClick = () => {
+    const scheduleJSON = convertScheduleToJSON(times, new Date(startDate));
+
+    //DO NOT DELETE THIS CONSOLE LOG
+    console.log('schedule: ', scheduleJSON);
+
+    dispatch(openModal(MODAL_NAMES.SCHEDULE_CREATED));
+  };
+
+  return (
+    <Button variant='secondary' disabled={!enable} onClick={handleClick}>
+      Upload
+    </Button>
+  );
+};
