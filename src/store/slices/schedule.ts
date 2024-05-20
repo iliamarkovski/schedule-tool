@@ -5,62 +5,62 @@ import { getDiffDays } from '../../utils/getDiffDays';
 import { getNextDays } from '../../utils/nextDays';
 
 type State = {
-  rangeStart: string;
-  rangeEnd: string;
-  rangeDiff: number;
+  startDate: string;
+  endDate: string;
+  datesDiff: number;
   times: string[][];
-  hasReset: boolean;
+  autocompleteUsed: boolean;
 };
 
 const initialState: State = {
-  rangeStart: '',
-  rangeEnd: '',
-  rangeDiff: 0,
+  startDate: '',
+  endDate: '',
+  datesDiff: 0,
   times: [],
-  hasReset: false,
+  autocompleteUsed: false,
 };
 
 const slice = createSlice({
   name: 'schedule',
   initialState,
   reducers: {
-    addRangeStart(state, action: PayloadAction<string>) {
-      state.rangeStart = action.payload;
+    addStartDate(state, action: PayloadAction<string>) {
+      state.startDate = action.payload;
 
-      if (!state.rangeStart) {
-        state.rangeDiff = 0;
+      if (!state.startDate) {
+        state.datesDiff = 0;
         state.times = [];
         return;
       }
 
-      if (state.rangeDiff > 0) {
+      if (state.datesDiff > 0) {
         const newRangeEnd = getNextDays(
-          new Date(state.rangeStart),
-          state.rangeDiff - 1
+          new Date(state.startDate),
+          state.datesDiff - 1
         );
 
-        state.rangeEnd = formatDate(newRangeEnd, 'yyyy-mm-dd');
+        state.endDate = formatDate(newRangeEnd, 'yyyy-mm-dd');
         return;
       }
 
-      const diff = getDiffDays(state.rangeStart, state.rangeEnd) + 1;
-      state.rangeDiff = diff;
+      const diff = getDiffDays(state.startDate, state.endDate) + 1;
+      state.datesDiff = diff;
 
       for (let i = 0; i < diff; i++) {
         state.times.push([]);
       }
     },
-    addRangeEnd(state, action: PayloadAction<string>) {
-      state.rangeEnd = action.payload;
+    addEndDate(state, action: PayloadAction<string>) {
+      state.endDate = action.payload;
 
-      if (!state.rangeEnd) {
-        state.rangeDiff = 0;
+      if (!state.endDate) {
+        state.datesDiff = 0;
         state.times = [];
         return;
       }
 
-      if (state.rangeStart) {
-        const diff = getDiffDays(state.rangeStart, state.rangeEnd) + 1;
+      if (state.startDate) {
+        const diff = getDiffDays(state.startDate, state.endDate) + 1;
         const timesLength = state.times.length;
 
         if (diff > timesLength) {
@@ -73,7 +73,7 @@ const slice = createSlice({
           }
         }
 
-        state.rangeDiff = diff;
+        state.datesDiff = diff;
       }
     },
     addTime(
@@ -86,31 +86,40 @@ const slice = createSlice({
     ) {
       state.times[action.payload.colIndex][action.payload.timeIndex] =
         action.payload.value;
-
-      if (!state.hasReset) {
-        state.hasReset = true;
-      }
     },
     addTimeSlot(state, action: PayloadAction<number>) {
       state.times[action.payload].push('');
-
-      if (!state.hasReset) {
-        state.hasReset = true;
-      }
+    },
+    removeTime(
+      state,
+      action: PayloadAction<{
+        colIndex: number;
+        timeIndex: number;
+      }>
+    ) {
+      state.times[action.payload.colIndex].splice(action.payload.timeIndex, 1);
     },
     resetTimes(state) {
-      for (let i = 0; i < state.rangeDiff; i++) {
+      for (let i = 0; i < state.datesDiff; i++) {
         state.times[i] = [];
       }
-
-      state.hasReset = false;
+    },
+    resetAll() {
+      return initialState;
     },
   },
 });
 
 const schedule = slice.reducer;
 
-export const { addRangeStart, addRangeEnd, addTime, addTimeSlot, resetTimes } =
-  slice.actions;
+export const {
+  addStartDate,
+  addEndDate,
+  addTime,
+  addTimeSlot,
+  resetTimes,
+  removeTime,
+  resetAll,
+} = slice.actions;
 
 export { schedule };
