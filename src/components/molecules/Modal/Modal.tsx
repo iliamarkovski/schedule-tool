@@ -1,9 +1,4 @@
-import {
-  DialogHTMLAttributes,
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-} from 'react';
+import { DialogHTMLAttributes, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { Button } from '../../atoms/Button';
 import { ModalTitle } from '../../atoms/ModalTitle/ModalTitle';
@@ -13,23 +8,22 @@ import styles from './Modal.module.scss';
 type Props = DialogHTMLAttributes<HTMLDialogElement> & {
   title: string;
   buttonTitle: string;
+  isOpen: boolean;
 };
 
-export const Modal = forwardRef(function Modal(
-  { title, buttonTitle, ...props }: Props,
-  ref
-) {
+export const Modal = ({ title, buttonTitle, isOpen, ...props }: Props) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  useImperativeHandle(ref, () => {
-    return {
-      open() {
-        if (dialogRef.current) {
-          dialogRef.current.showModal();
-        }
-      },
-    };
-  });
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (dialog) {
+      if (isOpen) {
+        dialog.showModal();
+      } else {
+        dialog.close();
+      }
+    }
+  }, [isOpen]);
 
   return (
     <>
@@ -44,4 +38,4 @@ export const Modal = forwardRef(function Modal(
       )}
     </>
   );
-});
+};
