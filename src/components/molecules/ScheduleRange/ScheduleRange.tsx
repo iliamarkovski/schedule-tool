@@ -1,26 +1,24 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Label } from '../../atoms/Label';
 import { AppDispatch, RootState } from '../../../store';
-import { addRangeStart, addRangeEnd } from '../../../store/slices/schedule';
+import { addStartDate, addEndDate } from '../../../store/slices/schedule';
 import styles from './ScheduleRange.module.scss';
 import { ChangeEvent } from 'react';
-import { DateOrTimePicker } from '../../atoms/DatePicker';
+import { DateOrTimePicker } from '../../atoms/DateOrTimePicker';
 
 export const ScheduleRange = () => {
-  const rangeStart = useSelector(
-    (state: RootState) => state.schedule.rangeStart
-  );
-  const rangeEnd = useSelector((state: RootState) => state.schedule.rangeEnd);
-  const rangeDiff = useSelector((state: RootState) => state.schedule.rangeDiff);
+  const startDate = useSelector((state: RootState) => state.schedule.startDate);
+  const endDate = useSelector((state: RootState) => state.schedule.endDate);
+  const datesDiff = useSelector((state: RootState) => state.schedule.datesDiff);
 
   const dispatch: AppDispatch = useDispatch();
 
   const handleStartDateChange = (event: ChangeEvent<HTMLInputElement>) => {
-    dispatch(addRangeStart(event.target.value));
+    dispatch(addStartDate(event.target.value));
   };
 
   const handleEndDateChange = (event: ChangeEvent<HTMLInputElement>) => {
-    dispatch(addRangeEnd(event.target.value));
+    dispatch(addEndDate(event.target.value));
   };
 
   return (
@@ -32,8 +30,8 @@ export const ScheduleRange = () => {
           <DateOrTimePicker
             type='date'
             onChange={handleStartDateChange}
-            max={rangeEnd}
-            value={rangeStart}
+            max={endDate}
+            value={startDate}
           />
         </div>
 
@@ -43,15 +41,15 @@ export const ScheduleRange = () => {
           <DateOrTimePicker
             type='date'
             onChange={handleEndDateChange}
-            min={rangeStart}
-            value={rangeEnd}
+            min={startDate}
+            value={endDate}
           />
         </div>
       </div>
 
-      {rangeDiff > 0 ? (
+      {datesDiff > 0 ? (
         <div className={styles.label}>
-          <Label title={`${rangeDiff} day${rangeDiff > 1 ? 's' : ''}`} />
+          <Label title={`${datesDiff} day${datesDiff > 1 ? 's' : ''}`} />
         </div>
       ) : null}
     </div>
