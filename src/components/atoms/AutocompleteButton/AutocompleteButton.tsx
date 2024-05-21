@@ -1,13 +1,48 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '../Button';
-import { RootState } from '../../../store';
+import { AppDispatch, RootState } from '../../../store';
 import { validateSchedule } from '../../../utils/validateSchedule';
+import {
+  setAutocompleteTimes,
+  setTimes,
+  updateIsAutocompleteUsed,
+} from '../../../store/slices/schedule';
+import { generateAutocomplete } from '../../../utils/generateAutocomplete';
+import { useState } from 'react';
 
 export const AutocompleteButton = () => {
   const times = useSelector((state: RootState) => state.schedule.times);
+  const isAutocompleteUsed = useSelector(
+    (state: RootState) => state.schedule.isAutocompleteUsed
+  );
+  const dispatch: AppDispatch = useDispatch();
 
-  const { started, invalid } = validateSchedule(times);
-  const enable = started && !invalid;
+  const { started, invalid, completed } = validateSchedule(times);
+  const enable = started && !invalid && !completed && !isAutocompleteUsed;
 
-  return <Button disabled={!enable}>Autocomplete</Button>;
+  const handleMouseEnter = () => {
+    dispatch(setAutocompleteTimes(generateAutocomplete(times)));
+  };
+
+  const handleMouseLeave = () => {
+    if (enable) {
+      dispatch(setAutocompleteTimes([]));
+    }
+  };
+
+  const handleClick = () => {
+    dispatch(updateIsAutocompleteUsed());
+    dispatch(setTimes(generateAutocomplete(times)));
+  };
+
+  return (
+    <Button
+      disabled={!enable}
+      onMouseEnter={handleMouseEnter}
+      onMouseOut={handleMouseLeave}
+      onClick={handleClick}
+    >
+      Autocomplete
+    </Button>
+  );
 };
