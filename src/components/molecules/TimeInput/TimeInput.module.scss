@@ -1,5 +1,9 @@
-.container {
+.field {
   position: relative;
+
+  input {
+    padding-inline: var(--space-xxl);
+  }
 }
 
 .button {
