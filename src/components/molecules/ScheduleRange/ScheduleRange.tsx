@@ -4,7 +4,7 @@ import { AppDispatch, RootState } from '../../../store';
 import { addStartDate, addEndDate } from '../../../store/slices/schedule';
 import styles from './ScheduleRange.module.scss';
 import { ChangeEvent } from 'react';
-import { DateOrTimePicker } from '../../atoms/DateOrTimePicker';
+import { Datepicker } from '../../atoms/DateOrTimePicker';
 
 export const ScheduleRange = () => {
   const startDate = useSelector((state: RootState) => state.schedule.startDate);
@@ -27,8 +27,7 @@ export const ScheduleRange = () => {
         <div className={styles.input}>
           <Label title='Start-Date' />
 
-          <DateOrTimePicker
-            type='date'
+          <Datepicker
             onChange={handleStartDateChange}
             max={endDate}
             value={startDate}
@@ -38,8 +37,7 @@ export const ScheduleRange = () => {
         <div className={styles.input}>
           <Label title='End-Date' />
 
-          <DateOrTimePicker
-            type='date'
+          <Datepicker
             onChange={handleEndDateChange}
             min={startDate}
             value={endDate}
