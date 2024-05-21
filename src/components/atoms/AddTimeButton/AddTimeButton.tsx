@@ -2,9 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../store';
 import { validateSchedule } from '../../../utils/validateSchedule';
 import { Button } from '../Button';
-import { openModal } from '../../../store/slices/modal';
 import { addTimeSlot } from '../../../store/slices/schedule';
-import { MODAL_NAMES } from '../../../constants/modalNames';
 
 type Props = {
   colIndex: number;
@@ -20,8 +18,6 @@ export const AddTimeButton = ({ colIndex }: Props) => {
     const { empty, invalid } = validateSchedule([colTimes]);
 
     if (!empty && invalid) {
-      dispatch(openModal(MODAL_NAMES.INVALID_TIME));
-
       return;
     }
 
