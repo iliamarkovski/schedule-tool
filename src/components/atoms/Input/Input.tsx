@@ -5,7 +5,7 @@ export type InputProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,
   'className'
 > & {
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'tertiary';
 };
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
