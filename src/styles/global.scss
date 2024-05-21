@@ -3,6 +3,7 @@
 @import './variables.scss';
 
 html {
+  scroll-behavior: smooth;
   font-size: var(--f-size-base);
 }
 
