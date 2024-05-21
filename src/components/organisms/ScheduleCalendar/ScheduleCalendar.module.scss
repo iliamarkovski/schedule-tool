@@ -6,6 +6,7 @@
   scroll-snap-type: x mandatory;
   width: 100%;
   gap: var(--space-s);
+  scroll-behavior: smooth;
 }
 
 .content {
@@ -15,7 +16,7 @@
 
 .col {
   scroll-snap-align: center;
-  flex-basis: calc((100% - 6 * var(--space-s)) / 7);
+  width: var(--size-item);
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
