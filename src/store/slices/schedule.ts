@@ -9,7 +9,9 @@ type State = {
   endDate: string;
   datesDiff: number;
   times: string[][];
-  autocompleteUsed: boolean;
+  autocompletedTimes: string[][];
+  isAutocompleteUsed: boolean;
+  scrollStep: number;
 };
 
 const initialState: State = {
@@ -17,7 +19,9 @@ const initialState: State = {
   endDate: '',
   datesDiff: 0,
   times: [],
-  autocompleteUsed: false,
+  autocompletedTimes: [],
+  isAutocompleteUsed: false,
+  scrollStep: 0,
 };
 
 const slice = createSlice({
@@ -76,6 +80,9 @@ const slice = createSlice({
         state.datesDiff = diff;
       }
     },
+    setTimes(state, action: PayloadAction<string[][]>) {
+      state.times = action.payload;
+    },
     addTime(
       state,
       action: PayloadAction<{
@@ -103,9 +110,22 @@ const slice = createSlice({
       for (let i = 0; i < state.datesDiff; i++) {
         state.times[i] = [];
       }
+
+      state.autocompletedTimes = [];
+
+      state.isAutocompleteUsed = false;
     },
     resetAll() {
       return initialState;
+    },
+    updateScrollStep(state, action: PayloadAction<number>) {
+      state.scrollStep = action.payload;
+    },
+    setAutocompleteTimes(state, action: PayloadAction<string[][]>) {
+      state.autocompletedTimes = action.payload;
+    },
+    updateIsAutocompleteUsed(state) {
+      state.isAutocompleteUsed = !state.isAutocompleteUsed;
     },
   },
 });
@@ -120,6 +140,10 @@ export const {
   resetTimes,
   removeTime,
   resetAll,
+  updateScrollStep,
+  setAutocompleteTimes,
+  setTimes,
+  updateIsAutocompleteUsed,
 } = slice.actions;
 
 export { schedule };
