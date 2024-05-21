@@ -1,3 +1,5 @@
+import { validateHhMm } from './validateHhMm';
+
 export const validateSchedule = (arr: string[][]) => {
   const validation: {
     empty: boolean;
@@ -25,9 +27,9 @@ export const validateSchedule = (arr: string[][]) => {
       validation.started = true;
     }
 
-    // Check if the nested array contains an empty string
+    // Check if the nested array contains a valid string
     for (let str of nestedArr) {
-      if (str === '') {
+      if (!validateHhMm(str)) {
         validation.invalid = true;
         break;
       }
