@@ -17,8 +17,7 @@ export const UploadButton = () => {
   const handleClick = () => {
     const scheduleJSON = convertScheduleToJSON(times, new Date(startDate));
 
-    //DO NOT DELETE THIS CONSOLE LOG
-    console.log('schedule: ', scheduleJSON);
+    console.log('schedule JSON: ', scheduleJSON);
 
     dispatch(openModal(MODAL_NAMES.SCHEDULE_CREATED));
   };
