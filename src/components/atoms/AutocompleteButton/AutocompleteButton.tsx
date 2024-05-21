@@ -8,7 +8,6 @@ import {
   updateIsAutocompleteUsed,
 } from '../../../store/slices/schedule';
 import { generateAutocomplete } from '../../../utils/generateAutocomplete';
-import { useState } from 'react';
 
 export const AutocompleteButton = () => {
   const times = useSelector((state: RootState) => state.schedule.times);
