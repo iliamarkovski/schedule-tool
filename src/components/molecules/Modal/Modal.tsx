@@ -1,9 +1,9 @@
 import { DialogHTMLAttributes, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { Button } from '../../atoms/Button';
-import { ModalTitle } from '../../atoms/ModalTitle/ModalTitle';
 
 import styles from './Modal.module.scss';
+import { ModalTitle } from '../../atoms/ModalTitle';
 
 type Props = DialogHTMLAttributes<HTMLDialogElement> & {
   title: string;
