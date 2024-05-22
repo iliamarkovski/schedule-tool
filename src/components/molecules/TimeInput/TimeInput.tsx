@@ -29,7 +29,8 @@ export const TimeInput = ({
   variant,
   value: timeValue,
 }: Props) => {
-  const [isValid, setIsValid] = useState<boolean>(true);
+  const [isInvalid, setIsInvalid] = useState<boolean>(false);
+  const [isUnsorted, setIsUnsorted] = useState<boolean>(false);
 
   const times = useSelector((state: RootState) => state.schedule.times);
   const dispatch: AppDispatch = useDispatch();
@@ -37,7 +38,8 @@ export const TimeInput = ({
   const colTimes = times[colIndex];
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setIsValid(true);
+    setIsInvalid(false);
+    setIsUnsorted(false);
 
     dispatch(
       addTime({
@@ -49,7 +51,14 @@ export const TimeInput = ({
   };
 
   const handleBlur = (event: ChangeEvent<HTMLInputElement>) => {
-    setIsValid(validateHhMm(event.target.value));
+    setIsInvalid(!validateHhMm(event.target.value));
+
+    const unsorted =
+      !isInvalid &&
+      timeIndex > 0 &&
+      colTimes[timeIndex - 1] >= colTimes[timeIndex];
+
+    setIsUnsorted(unsorted);
   };
 
   const handleRemove = () => {
@@ -63,7 +72,7 @@ export const TimeInput = ({
 
   const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      setIsValid(validateHhMm(timeValue));
+      setIsInvalid(!validateHhMm(timeValue));
 
       if (colTimes.length < 4) {
         const { empty, invalid } = validateSchedule([colTimes]);
@@ -100,7 +109,13 @@ export const TimeInput = ({
         </button>
       </div>
 
-      {!isValid ? <ErrorMessage text='Enter a valid time!' /> : null}
+      {isInvalid ? (
+        <ErrorMessage variant='error' text='Enter a valid time!' />
+      ) : null}
+
+      {!isInvalid && isUnsorted ? (
+        <ErrorMessage variant='note' text='Correct the order!' />
+      ) : null}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 .message {
-  margin: 0;
+  margin: var(--space-xxxs) 0 0;
   font-size: var(--f-size-s);
   padding-inline: var(--space-xs);
   text-align: center;
@@ -9,6 +9,6 @@
   color: var(--color-primary);
 }
 
-.warning {
-  color: var(--color-warning);
+.note {
+  color: var(--color-secondary);
 }

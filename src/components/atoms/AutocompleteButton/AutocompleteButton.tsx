@@ -8,6 +8,7 @@ import {
   updateIsAutocompleteUsed,
 } from '../../../store/slices/schedule';
 import { generateAutocomplete } from '../../../utils/generateAutocomplete';
+import { useRef } from 'react';
 
 export const AutocompleteButton = () => {
   const times = useSelector((state: RootState) => state.schedule.times);
@@ -15,12 +16,18 @@ export const AutocompleteButton = () => {
     (state: RootState) => state.schedule.isAutocompleteUsed
   );
   const dispatch: AppDispatch = useDispatch();
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
-  const { started, invalid, completed } = validateSchedule(times);
-  const enable = started && !invalid && !completed && !isAutocompleteUsed;
+  const { started, invalid, completed, unsorted } = validateSchedule(times);
+  const enable =
+    started && !invalid && !completed && !isAutocompleteUsed && !unsorted;
 
   const handleMouseEnter = () => {
     dispatch(setAutocompleteTimes(generateAutocomplete(times)));
+
+    if (buttonRef.current) {
+      buttonRef.current.focus();
+    }
   };
 
   const handleMouseLeave = () => {
@@ -40,6 +47,7 @@ export const AutocompleteButton = () => {
       onMouseEnter={handleMouseEnter}
       onMouseOut={handleMouseLeave}
       onClick={handleClick}
+      ref={buttonRef}
     >
       Autocomplete
     </Button>

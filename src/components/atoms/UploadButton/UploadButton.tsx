@@ -11,8 +11,8 @@ export const UploadButton = () => {
   const times = useSelector((state: RootState) => state.schedule.times);
   const startDate = useSelector((state: RootState) => state.schedule.startDate);
 
-  const { completed } = validateSchedule(times);
-  const enable = completed;
+  const { completed, unsorted } = validateSchedule(times);
+  const enable = completed && !unsorted;
 
   const handleClick = () => {
     const scheduleJSON = convertScheduleToJSON(times, new Date(startDate));

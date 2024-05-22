@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes } from 'react';
+import { forwardRef, ButtonHTMLAttributes } from 'react';
 import styles from './Button.module.scss';
 
 type Props = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'> & {
@@ -6,13 +6,16 @@ type Props = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'> & {
   fullWidth?: boolean;
 };
 
-export const Button = ({ variant = 'primary', fullWidth, ...props }: Props) => {
-  return (
-    <button
-      {...props}
-      className={`${styles.button} ${styles[variant]} ${
-        fullWidth ? styles.fullWidth : ''
-      }`}
-    />
-  );
-};
+export const Button = forwardRef<HTMLButtonElement, Props>(
+  ({ variant = 'primary', fullWidth, ...props }, ref) => {
+    return (
+      <button
+        {...props}
+        ref={ref}
+        className={`${styles.button} ${styles[variant]} ${
+          fullWidth ? styles.fullWidth : ''
+        }`}
+      />
+    );
+  }
+);
