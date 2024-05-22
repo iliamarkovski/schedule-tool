@@ -11,14 +11,27 @@ export const ScheduleSliderButtons = () => {
   );
   const dispatch: AppDispatch = useDispatch();
 
-  const itemsToScroll = times.length - 7;
+  const visibleItems = 7;
+
+  const itemsToScroll = times.length - visibleItems;
 
   const handleNextClick = () => {
-    dispatch(updateScrollStep(scrollStep + 1));
+    let stepsToScroll = visibleItems;
+    if (scrollStep + stepsToScroll > itemsToScroll) {
+      stepsToScroll = itemsToScroll - scrollStep;
+    }
+
+    dispatch(updateScrollStep(scrollStep + stepsToScroll));
   };
 
   const handlePrevClick = () => {
-    dispatch(updateScrollStep(scrollStep - 1));
+    let stepsToScroll = visibleItems;
+
+    if (scrollStep - stepsToScroll < 0) {
+      stepsToScroll = scrollStep;
+    }
+
+    dispatch(updateScrollStep(scrollStep - stepsToScroll));
   };
 
   return (

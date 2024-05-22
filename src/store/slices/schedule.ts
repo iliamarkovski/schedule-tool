@@ -53,6 +53,8 @@ const slice = createSlice({
       for (let i = 0; i < diff; i++) {
         state.times.push([]);
       }
+
+      state.scrollStep = 0;
     },
     addEndDate(state, action: PayloadAction<string>) {
       state.endDate = action.payload;
@@ -79,6 +81,8 @@ const slice = createSlice({
 
         state.datesDiff = diff;
       }
+
+      state.scrollStep = 0;
     },
     setTimes(state, action: PayloadAction<string[][]>) {
       state.times = action.payload;

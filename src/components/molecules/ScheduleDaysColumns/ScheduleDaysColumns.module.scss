@@ -1,0 +1,29 @@
+.container {
+  flex-grow: 1;
+  overflow: auto;
+  display: flex;
+  padding-block-end: var(--space-xxxxl);
+  scroll-snap-type: x mandatory;
+  width: 100%;
+  gap: var(--space-s);
+  scroll-behavior: smooth;
+
+  &::-webkit-scrollbar {
+    -webkit-appearance: auto;
+    border-block-end: 1px solid var(--color-base-100);
+  }
+
+  &::-webkit-scrollbar-thumb:horizontal {
+    border-radius: 0;
+    height: var(--size-scrollbar);
+    background-color: var(--color-base-100);
+  }
+}
+
+.col {
+  scroll-snap-align: center;
+  width: var(--size-item);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}

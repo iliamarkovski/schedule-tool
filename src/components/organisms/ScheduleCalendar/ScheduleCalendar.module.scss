@@ -1,23 +1,6 @@
 .container {
   min-height: var(--size-calendar);
-  overflow: auto;
-  display: flex;
-  padding-block-end: var(--space-xxxxl);
-  scroll-snap-type: x mandatory;
-  width: 100%;
-  gap: var(--space-s);
-  scroll-behavior: smooth;
-}
-
-.content {
-  flex-grow: 1;
-  display: flex;
-}
-
-.col {
-  scroll-snap-align: center;
-  width: var(--size-item);
-  flex-shrink: 0;
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
